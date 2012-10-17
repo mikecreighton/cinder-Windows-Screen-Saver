@@ -15,6 +15,8 @@
 *.suo
 *.ncb
 *.sdf
+*.opensdf
+*.vcxproj.user
 Debug/
 Release/
 ipch/

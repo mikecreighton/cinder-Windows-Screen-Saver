@@ -1,5 +1,41 @@
-#include "cinder/CinderResources.h"
+#include "Resources.h"
 
-ID ICON "cinder_app_icon.ico"
+// Here's where we're going to start defining our configuration
+// dialogue box and the various fields that exist within it.
+#define DLG_SCRNSAVECONFIGURE 2003
+#define IDC_STATIC -1
+#define IDC_STC1 2004
+#define IDS_DESCRIPTION 1
 
-//RES_MY_RESOURCE
+ID ICON DISCARDABLE "cinder_app_icon.ico"
+
+// Create the dialogue box and dimensions
+DLG_SCRNSAVECONFIGURE DIALOGEX 20,20,255,85
+// Set the title of the box
+CAPTION "Screen Saver Example Configuration"
+// Declare the typeface we'll be using
+FONT 8,"MS Sans Serif",0,0,1
+// Declare the style of the box.
+STYLE WS_POPUP|WS_VISIBLE|WS_CAPTION|WS_SYSMENU|DS_MODALFRAME
+// These are the extended styles of the box.
+EXSTYLE WS_EX_APPWINDOW|WS_EX_TOOLWINDOW
+// Now we tell Windows what to put in it.
+BEGIN
+  // This is simply a box with a label that visually surrounds the UI.
+  CONTROL "Controls",IDC_STATIC,"Button",WS_CHILDWINDOW|WS_VISIBLE|BS_GROUPBOX,6,6,246,46
+
+  // Declare our OK and Cancel buttons
+  CONTROL "OK",IDOK,"Button",WS_CHILDWINDOW|WS_VISIBLE|WS_TABSTOP|BS_DEFPUSHBUTTON,144,61,50,17
+  CONTROL "Cancel",IDCANCEL,"Button",WS_CHILDWINDOW|WS_VISIBLE|WS_TABSTOP,195,61,50,17
+
+  // Here's a label that we're going to use to describe our combo box.
+  CONTROL "Options",IDC_STC1,"Static",WS_CHILDWINDOW|WS_VISIBLE,18,27,69,9
+
+  // Here's the actual combo box that we'll populate in our app.
+  CONTROL "",IDC_COMBO_OPTIONS,"ComboBox",WS_CHILDWINDOW|WS_VISIBLE|WS_VSCROLL|WS_TABSTOP|CBS_NOINTEGRALHEIGHT|CBS_DROPDOWNLIST,96,24,144,60
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+  IDS_DESCRIPTION "Screen Saver Example"
+END
