@@ -7,7 +7,7 @@ While Cinder's Tinderbox tool can generate a base screen saver project, it doesn
 
 If you want to read all about screen saver development for Windows, here are four great starting points:
 
-*  [Handling Screen Savers on MSDN](http://msdn.microsoft.com/en-us/library/cc144066(v=vs.85).aspx)
+*  [Handling Screen Savers on MSDN](http://msdn.microsoft.com/en-us/library/cc144066.aspx)
 *  [Writing an OpenGL Screensaver for Windows](http://www.cityintherain.com/howtoscr.html)
 *  [Screen Saver Tutorial](http://www.heroicvirtuecreations.com/ScrSaveTutorial.html)
 *  [How to write a 32bit screen saver](http://www.wischik.com/scr/howtoscr.html)
