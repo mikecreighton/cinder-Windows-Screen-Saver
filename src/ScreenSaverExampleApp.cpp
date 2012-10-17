@@ -7,7 +7,7 @@
   - Click OK
 
   To launch the screen saver's configuration dialog when debugging in Visual C++ 2010, follow these steps:
-  
+
   - Right-click on the project name and choose Properties.
   - Go to Configuration Properties > Debugging > Command Arguments
   - Make sure the value is "-c" (without the quotes).
@@ -27,9 +27,9 @@
 // Now we need to load the correct Windows
 // screen saver library
 #ifdef UNICODE
-  #pragma comment(lib, "ScrnSavw.lib")
+#pragma comment(lib, "ScrnSavw.lib")
 #else
-  #pragma comment(lib, "ScrnSave.lib")
+#pragma comment(lib, "ScrnSave.lib")
 #endif
 
 // ------------------------------------------------------------------------
@@ -44,15 +44,15 @@ using namespace ci;
 using namespace ci::app;
 
 class ScreenSaverExampleApp : public AppScreenSaver {
- public:
-	virtual void setup();
-	virtual void update();
-	virtual void draw();
+public:
+  virtual void setup();
+  virtual void update();
+  virtual void draw();
   virtual void prepareSettings( Settings *settings );
-	
- protected:
-   int mCurrentOption;
-   string mOutputStr;
+
+protected:
+  int mCurrentOption;
+  string mOutputStr;
 };
 
 void ScreenSaverExampleApp::prepareSettings( Settings *settings )
@@ -104,13 +104,13 @@ void ScreenSaverExampleApp::draw()
 // Need to undefine the macro for starting the screen saver
 // so that we can add our own custom controls.
 #ifdef CINDER_APP_SCREENSAVER
-  #undef CINDER_APP_SCREENSAVER
+#undef CINDER_APP_SCREENSAVER
 #endif
 
 /*
   Note: when dealing with Windows screen savers and using the ScrnSave
   library, there are three magic functions that must be present:
-  
+
   LRESULT WINAPI ScreenSaverProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
   BOOL WINAPI ScreenSaverConfigureDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
   BOOL WINAPI RegisterDialogClasses(HANDLE hInst);
@@ -125,18 +125,18 @@ void ScreenSaverExampleApp::draw()
 cinder::app::AppScreenSaver *sScreenSaverMswInstance;
 extern "C" LRESULT WINAPI ScreenSaverProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam ) {
   switch( message ) {
-		case WM_CREATE:
-      sScreenSaverMswInstance = new ScreenSaverExampleApp;
-      cinder::app::AppScreenSaver::executeLaunch( sScreenSaverMswInstance, new RendererGl, "ScreenSaverExampleApp", hWnd ); 
-      return 0; 
-      break;
-		default:
-      if( sScreenSaverMswInstance ) 
-        return sScreenSaverMswInstance->getImpl()->eventHandler( hWnd, message, wParam, lParam );
-      else 
-        return DefScreenSaverProc( hWnd, message, wParam, lParam );
-      break;
-	}
+  case WM_CREATE:
+    sScreenSaverMswInstance = new ScreenSaverExampleApp;
+    cinder::app::AppScreenSaver::executeLaunch( sScreenSaverMswInstance, new RendererGl, "ScreenSaverExampleApp", hWnd ); 
+    return 0; 
+    break;
+  default:
+    if( sScreenSaverMswInstance ) 
+      return sScreenSaverMswInstance->getImpl()->eventHandler( hWnd, message, wParam, lParam );
+    else 
+      return DefScreenSaverProc( hWnd, message, wParam, lParam );
+    break;
+  }
 }
 
 /*
@@ -159,7 +159,7 @@ int getValueOfOptions()
   valsize = sizeof(val);
   // Let's see what's in there for our "Options" key.
   res = RegQueryValueEx(skey, L"Options", 0, &valtype, (LPBYTE)&val, &valsize);
-  
+
   if (res == ERROR_SUCCESS)
     returnVal = val;
 
@@ -175,7 +175,7 @@ void writeValueOfOptions(int newVal)
   DWORD val, disp;
 
   res = RegCreateKeyEx(HKEY_CURRENT_USER, L"Software\\LibCinder\\ScreenSaverExample", 0, NULL,
-                     REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&skey,&disp);
+    REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&skey,&disp);
 
   if (res!=ERROR_SUCCESS)
     return;
@@ -210,63 +210,63 @@ extern "C" BOOL WINAPI ScreenSaverConfigureDialog( HWND hDlg, UINT message, WPAR
   switch ( message ) 
   {
     // This is what happens when we're asked to display the configuration dialog box
-    case WM_INITDIALOG:
+  case WM_INITDIALOG:
 
-      //get configuration from the registry
-      optionSelection = getValueOfOptions();
+    //get configuration from the registry
+    optionSelection = getValueOfOptions();
 
-      // Populate the string options in the combobox
-      SendMessage(cboOptions, CB_ADDSTRING, 0, (LPARAM) L"One");
-      SendMessage(cboOptions, CB_ADDSTRING, 0, (LPARAM) L"Two");
-      SendMessage(cboOptions, CB_ADDSTRING, 0, (LPARAM) L"Three");
+    // Populate the string options in the combobox
+    SendMessage(cboOptions, CB_ADDSTRING, 0, (LPARAM) L"One");
+    SendMessage(cboOptions, CB_ADDSTRING, 0, (LPARAM) L"Two");
+    SendMessage(cboOptions, CB_ADDSTRING, 0, (LPARAM) L"Three");
 
-      if(optionSelection == -1) {
-        // Going to default to a value of 1 if nothing has been selected already.
-        optionSelection = 1;
-        writeValueOfOptions(optionSelection);
+    if(optionSelection == -1) {
+      // Going to default to a value of 1 if nothing has been selected already.
+      optionSelection = 1;
+      writeValueOfOptions(optionSelection);
+    }
+
+    // Set the current selected item. The option list is an indexed array that starts at 0.
+    SendDlgItemMessage(hDlg, IDC_COMBO_OPTIONS, CB_SETCURSEL, optionSelection - 1, 0); 
+
+    return TRUE;
+    break;
+
+  case WM_COMMAND:
+    switch( LOWORD( wParam ) ) 
+    {
+      // Here's where we get feedback from the combo box
+    case IDC_COMBO_OPTIONS:
+      switch (HIWORD(wParam))
+      {
+        // Here's where the combo box option has been chosen
+      case CBN_SELENDOK:
+        // Let's find out what the new option currently is.
+        currOption = SendMessage(cboOptions, CB_GETCURSEL, 0, 0);
+        break; // End check for good drop-down selection
       }
+      break;
 
-      // Set the current selected item. The option list is an indexed array that starts at 0.
-      SendDlgItemMessage(hDlg, IDC_COMBO_OPTIONS, CB_SETCURSEL, optionSelection - 1, 0); 
-      
+      // Here's where we handle when the OK button is clicked
+    case IDOK:
+      // First get the option that's currently selected in the combo box.
+      currOption = SendMessage(cboOptions, CB_GETCURSEL, 0, 0);
+      currOption += 1; // Adding 1 to it since the options' indices start with 0
+
+      // Write it to the registry
+      writeValueOfOptions(currOption);
+
+      EndDialog( hDlg, LOWORD( wParam ) == IDOK ); 
+      return TRUE; 
+      break;
+
+    case IDCANCEL: 
+      // Here's when a Cancel click came through. We don't want to do anything.
+      EndDialog( hDlg, LOWORD( wParam ) == IDOK ); 
       return TRUE;
       break;
-
-    case WM_COMMAND:
-      switch( LOWORD( wParam ) ) 
-      {
-        // Here's where we get feedback from the combo box
-        case IDC_COMBO_OPTIONS:
-          switch (HIWORD(wParam))
-          {
-            // Here's where the combo box option has been chosen
-            case CBN_SELENDOK:
-              // Let's find out what the new option currently is.
-              currOption = SendMessage(cboOptions, CB_GETCURSEL, 0, 0);
-              break; // End check for good drop-down selection
-          }
-          break;
-
-        // Here's where we handle when the OK button is clicked
-        case IDOK:
-          // First get the option that's currently selected in the combo box.
-          currOption = SendMessage(cboOptions, CB_GETCURSEL, 0, 0);
-          currOption += 1; // Adding 1 to it since the options' indices start with 0
-
-          // Write it to the registry
-          writeValueOfOptions(currOption);
-
-          EndDialog( hDlg, LOWORD( wParam ) == IDOK ); 
-          return TRUE; 
-          break;
-
-        case IDCANCEL: 
-          // Here's when a Cancel click came through. We don't want to do anything.
-          EndDialog( hDlg, LOWORD( wParam ) == IDOK ); 
-          return TRUE;
-          break;
-      }
-      break;
+    }
+    break;
 
   } // End command switch
 
