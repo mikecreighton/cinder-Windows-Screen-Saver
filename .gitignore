@@ -10,3 +10,11 @@
 *.lai
 *.la
 *.a
+
+# Windows Visual Studio stuff
+*.suo
+*.ncb
+*.sdf
+Debug/
+Release/
+ipch/
