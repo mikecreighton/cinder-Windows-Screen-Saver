@@ -11,3 +11,7 @@ If you want to read all about screen saver development for Windows, here are fou
 *  [Writing an OpenGL Screensaver for Windows](http://www.cityintherain.com/howtoscr.html)
 *  [Screen Saver Tutorial](http://www.heroicvirtuecreations.com/ScrSaveTutorial.html)
 *  [How to write a 32bit screen saver](http://www.wischik.com/scr/howtoscr.html)
+
+This project was built against Cinder 0.8.4 and should be put in its own directory within the cinder\samples directory.
+
+Cinder can be found here: [http://libcinder.org](http://libcinder.org)
