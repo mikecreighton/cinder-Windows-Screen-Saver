@@ -6,7 +6,7 @@
   - Make sure the value is "-s" (without the quotes).
   - Click OK
 
-  To launch the screen saver's configuration dialogue when debugging in Visual C++ 2010, follow these steps:
+  To launch the screen saver's configuration dialog when debugging in Visual C++ 2010, follow these steps:
   
   - Right-click on the project name and choose Properties.
   - Go to Configuration Properties > Debugging > Command Arguments
@@ -188,7 +188,7 @@ void writeValueOfOptions(int newVal)
 }
 
 /*
-  Here's where we handle the configuration dialogue box logic.
+  Here's where we handle the configuration dialog box logic.
 
   We're going to have a simple combo box that let's us choose between three options:
 
@@ -209,7 +209,7 @@ extern "C" BOOL WINAPI ScreenSaverConfigureDialog( HWND hDlg, UINT message, WPAR
 
   switch ( message ) 
   {
-    // This is what happens when we're asked to display the configuration dialogue box
+    // This is what happens when we're asked to display the configuration dialog box
     case WM_INITDIALOG:
 
       //get configuration from the registry
